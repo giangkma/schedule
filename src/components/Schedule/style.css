@@ -1,0 +1,88 @@
+.schedule-container {
+    background: #337ab7;
+    color: #ffffff;
+}
+.schedule-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1rem;
+}
+.icon-account {
+    display: flex;
+    align-items: center;
+}
+.icon-account > p {
+    font-size: 1.7rem;
+}
+.icon-account-avatar > img {
+    width: 5rem;
+    box-shadow: 3px 4px 4px rgba(0, 0, 0, 0.541);
+    border-radius: 50%;
+}
+.schedule-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    padding: 2rem;
+}
+.schedule-title > svg {
+    width: 5rem;
+    height: 5rem;
+    margin-right: 0.5rem;
+}
+.schedule-title > p {
+    font-size: 2.4rem;
+}
+.MuiMenuItem-root {
+    font-size: 1.8rem !important;
+}
+.dx-scheduler.dx-widget.dx-visibility-change-handler {
+    height: 90rem;
+    width: 80%;
+    margin: 2rem auto;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.281), -5px 5px 5px rgba(0, 0, 0, 0.281);
+}
+
+@media (max-width: 1024px) {
+    .dx-scheduler.dx-widget.dx-visibility-change-handler {
+        width: 95%;
+    }
+}
+@media (max-width: 768px) {
+    .schedule-title {
+        padding: 1.5rem;
+    }
+    .schedule-title > p {
+        font-size: 2.1rem;
+    }
+    .icon-account > p {
+        font-size: 1.7rem;
+        text-align: end;
+    }
+    .schedule-title > svg {
+        width: 4rem;
+        height: 4rem;
+        margin-right: 0.5rem;
+    }
+}
+@media (max-width: 425px) {
+    .schedule-title {
+        padding: 1rem;
+    }
+    .schedule-title > p {
+        font-size: 1.5rem;
+    }
+    .icon-account > p {
+        font-size: 1.3rem;
+    }
+    .icon-account-avatar > img {
+        width: 3rem;
+    }
+    .schedule-title > svg {
+        width: 3rem;
+        height: 3rem;
+        margin-right: 0.5rem;
+    }
+}

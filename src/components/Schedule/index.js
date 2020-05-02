@@ -71,7 +71,7 @@ class Schedule extends React.Component {
             });
         } else {
             const { history } = this.props;
-            history.replace('/a');
+            history.replace('/schedule');
             Swal.fire(
                 'Bạn chưa đăng nhập?',
                 'Hãy đăng nhập tài khoản sinh viên của mình !',
@@ -117,7 +117,7 @@ class Schedule extends React.Component {
 
     logOut = () => {
         const { history } = this.props;
-        history.replace('/');
+        history.replace('/schedule');
         localStorage.removeItem('data');
         localStorage.removeItem('studentAccount');
     };

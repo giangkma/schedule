@@ -9,9 +9,9 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <Switch>
-                    <Route path="/schedule" component={() => <Schedule />} />
+                    <Route path="/schedule/view" component={() => <Schedule />} />
                     <Route
-                        path="/"
+                        path="/schedule"
                         exact
                         component={() => <Login />}
                     />

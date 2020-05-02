@@ -27,7 +27,7 @@ class Login extends Component {
         const getData = JSON.parse(localStorage.getItem('data'));
         if (getData) {
             const { history } = this.props;
-            history.replace('/schedule');
+            history.replace('/schedule/view');
         }
     }
 
@@ -74,17 +74,15 @@ class Login extends Component {
                 encodeStudentPassword
             ).then((res) => {
                 const { dataJson, status } = res.data;
-                setTimeout(() => {
-                    this.showAlert(status);
-                    this.hideLoadding();
-                }, 200);
+                this.showAlert(status);
+                this.hideLoadding();
                 if (status) {
                     localStorage.setItem('data', JSON.stringify(dataJson));
                     localStorage.setItem(
                         'studentAccount',
                         JSON.stringify(upperCasestudentAccount)
                     );
-                    history.replace('/schedule');
+                    history.replace('/schedule/view');
                 }
             });
         }

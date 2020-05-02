@@ -1,6 +1,6 @@
 {
   "name": "schedule-kma",
-  "homepage": "https://giangkma.github.io/schedule",
+  "homepage": "http://giangkma.github.io/schedule",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

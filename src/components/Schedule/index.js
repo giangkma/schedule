@@ -123,7 +123,7 @@ class Schedule extends React.Component {
                         <p>Thời khóa biểu KMA</p>
                     </div>
                     <div className="icon-account">
-                        <p>{`Xin chào ${studentAccount} !`}</p>
+                        <p>{`Xin chào ${studentAccount}`}</p>
                         <IconButton edge="end" aria-label="account of current user" aria-controls="menu" aria-haspopup="true" onClick={this.handleProfileMenuOpen} color="inherit">
                             <div className="icon-account-avatar">
                                 <img className="avatar-img" src={avatar} alt="avatar" />

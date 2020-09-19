@@ -33,5 +33,5 @@ body{
 .swal2-popup.swal2-toast{
     padding: 1.7rem;
     font-size: 1.6rem;
-    box-shadow: none;
+    box-shadow: none!important;
 }

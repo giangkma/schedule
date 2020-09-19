@@ -1,87 +1,72 @@
-import { IconButton } from '@material-ui/core';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import DateRangeIcon from '@material-ui/icons/DateRange';
-import Scheduler from 'devextreme-react/scheduler';
-import React from 'react';
-import { withRouter } from 'react-router';
-import Swal from 'sweetalert2';
-import avatar from '../../image/avatar-default.png';
-import './style.css';
+import { IconButton } from "@material-ui/core";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import DateRangeIcon from "@material-ui/icons/DateRange";
+import Scheduler from "devextreme-react/scheduler";
+import React from "react";
+import { withRouter } from "react-router";
+import avatar from "../../image/avatar-default.png";
+import AuthService from "../../AuthService";
+import "./style.css";
 
-const views = ['agenda', 'month', 'day', 'week'];
-const lessons = ['1,2,3', '4,5,6', '7,8,9', '10,11,12', '13,14,15,16'];
-const startTimeMiniSecond = [
-    25200000, //7h00
-    34500000, //9h35
-    45000000, //12h30
-    54300000, //15h05
-    64800000, //18h00
-];
-const endTimeMiniSecond = [
-    33900000, //9h25
-    43200000, //12h00
-    53700000, //14h55
-    63000000, //17h30
-    76500000, //21h15
-];
+const views = ["agenda", "month", "day", "week"];
+const lessons = ["1,2,3", "1,2,3,4,5,6", "4,5,6", "7,8,9", "7,8,9,10,11,12", "10,11,12", "13,14,15,16"];
+const startTimeHours = [7, 7, 9, 12, 12, 15, 18];
+const startTimeMinutes = [0, 0, 30, 35, 30, 5, 0];
+const endTimeHours = [9, 12, 12, 14, 17, 17, 21, 17];
+const endTimeMinutes = [25, 0, 0, 55, 30, 30, 15];
+const shift = ["1", "1-2", "2", "3", "3-4", "4", "5"];
 
 class Schedule extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentDate: new Date(),
             data: [],
-            studentAccount: '',
             anchorEl: null,
+            studentAccount: null,
         };
+        this.Auth = new AuthService();
     }
-
     componentDidMount() {
-        const getData = JSON.parse(localStorage.getItem('data'));
-        const studentAccount = JSON.parse(
-            localStorage.getItem('studentAccount')
-        );
-        if (getData) {
+        const { history } = this.props;
+        const studentAccount = localStorage.getItem("studentAccount");
+        if (!studentAccount) {
+            history.replace("/schedule");
+        } else {
+            this.setState({
+                ...this.state,
+                studentAccount: studentAccount,
+            });
+            const getData = JSON.parse(localStorage.getItem("data"));
             const newData = [];
-            const list60Days = Object.keys(getData);
-            list60Days.map((day) => {
-                const subject = {};
+            const listDays = Object.keys(getData);
+            listDays.map((day) => {
                 const dayMiniSecond = day * 1;
+                const YEAR = new Date(dayMiniSecond).getFullYear();
+                const MONTH = new Date(dayMiniSecond).getMonth();
+                const DAY = new Date(dayMiniSecond).getDate();
                 getData[day].map((item) => {
-                    subject.text = `${item.subject} - ${item.address}`;
+                    const subject = {};
+                    const _class = `${item.address.split("_")[0]}-${item.address.split(" ")[1]}`;
                     lessons.map((lesson, index) => {
                         if (lesson === item.lesson) {
-                            subject.startDate = new Date(
-                                dayMiniSecond + startTimeMiniSecond[index]
-                            );
-                            subject.endDate = new Date(
-                                dayMiniSecond + endTimeMiniSecond[index]
-                            );
+                            subject.shift = index + 1;
+                            subject.text = `Ca ${shift[index]} : ${item.subject.split("-")[0]} : ${_class}`;
+                            subject.startDate = new Date(YEAR, MONTH, DAY, startTimeHours[index], startTimeMinutes[index]);
+                            subject.endDate = new Date(YEAR, MONTH, DAY, endTimeHours[index], endTimeMinutes[index]);
                         }
-                        return 1;
                     });
-                    return 1;
+                    newData.push(subject);
                 });
-                return newData.push(subject);
+                return newData.sort((a, b) => a.shift - b.shift);
             });
             this.setState({
                 data: newData,
-                studentAccount,
             });
-        } else {
-            const { history } = this.props;
-            history.replace('/schedule');
-            Swal.fire(
-                'Bạn chưa đăng nhập?',
-                'Hãy đăng nhập tài khoản sinh viên của mình !',
-                'question'
-            );
         }
     }
-
     optionChanged = (e) => {
-        if (e.fullName === 'currentDate') {
+        if (e.studentAccount === "currentDate") {
             this.setState({
                 currentDate: e.value,
             });
@@ -101,10 +86,10 @@ class Schedule extends React.Component {
             <Menu
                 className="menu-account"
                 anchorEl={anchorEl}
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                anchorOrigin={{ vertical: "top", horizontal: "right" }}
                 id="menu"
                 keepMounted
-                transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+                transformOrigin={{ vertical: "top", horizontal: "right" }}
                 open={isMenuOpen}
                 onClose={this.handleMenuClose}
             >
@@ -117,9 +102,9 @@ class Schedule extends React.Component {
 
     logOut = () => {
         const { history } = this.props;
-        history.replace('/schedule');
-        localStorage.removeItem('data');
-        localStorage.removeItem('studentAccount');
+        history.push("/schedule");
+        localStorage.removeItem("studentAccount");
+        localStorage.removeItem("data");
     };
 
     handleProfileMenuOpen = (e) => {
@@ -139,20 +124,9 @@ class Schedule extends React.Component {
                     </div>
                     <div className="icon-account">
                         <p>{`Xin chào ${studentAccount} !`}</p>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls="menu"
-                            aria-haspopup="true"
-                            onClick={this.handleProfileMenuOpen}
-                            color="inherit"
-                        >
+                        <IconButton edge="end" aria-label="account of current user" aria-controls="menu" aria-haspopup="true" onClick={this.handleProfileMenuOpen} color="inherit">
                             <div className="icon-account-avatar">
-                                <img
-                                    className="avatar-img"
-                                    src={avatar}
-                                    alt="avatar"
-                                />
+                                <img className="avatar-img" src={avatar} alt="avatar" />
                             </div>
                         </IconButton>
                     </div>
@@ -162,9 +136,9 @@ class Schedule extends React.Component {
                     onOptionChanged={this.optionChanged}
                     dataSource={data}
                     views={views}
-                    defaultCurrentView={'month'}
-                    currentDate={this.state.currentDate}
-                    height={600}
+                    adaptivityEnabled={true}
+                    defaultCurrentView={"month"}
+                    height={700}
                     startDayHour={6}
                     endDayHour={22}
                 />

@@ -2,6 +2,21 @@
     background: #337ab7;
     color: #ffffff;
 }
+.dx-tooltip-appointment-item-content-date{
+    color: #EE5A24;
+}
+.dx-tooltip-appointment-item-delete-button-container{
+    display: none;
+}
+.dx-overlay-content.dx-resizable {
+    top: -60%!important;
+    width: 50%!important;
+}
+.dx-scheduler .dx-scheduler-overlay-panel .dx-overlay-content {
+    position: relative;
+    background: #ffffff;
+    box-shadow: 3px 4px 6px #718093, -3px -4px 6px #71809350!important;
+}
 .schedule-container {
     display: flex;
     justify-content: space-between;
@@ -49,8 +64,15 @@
     .dx-scheduler.dx-widget.dx-visibility-change-handler {
         width: 95%;
     }
+    .dx-overlay-content.dx-resizable {
+        top: -50%!important;
+        width: 60%!important;
+    }
 }
 @media (max-width: 768px) {
+    .dx-overlay-content.dx-resizable {
+        width: 100%!important;
+    }
     .schedule-title {
         padding: 1.5rem;
     }
@@ -67,7 +89,38 @@
         margin-right: 0.5rem;
     }
 }
+@media (max-width: 500px) {
+    .dx-overlay-content.dx-resizable {
+        width: 100%!important;
+        top: -40%!important;
+    }
+    .dx-tooltip-appointment-item-content > div{
+        font-size: 1.6rem!important;
+    }
+    .dx-tooltip-appointment-item{
+        margin-left: 0!important;
+    }
+    .dx-item-content.dx-list-item-content{
+        padding-left: 0!important
+    }
+}
 @media (max-width: 425px) {
+    .dx-overlay-content.dx-resizable {
+        width: 100%!important;
+        top: -40%!important;
+    }
+    .dx-tooltip-appointment-item-content > div{
+        font-size: 1.5rem!important;
+    }
+    .dx-tooltip-appointment-item{
+        margin-left: 0!important;
+    }
+    .dx-tooltip-appointment-item-marker{
+        display: none;
+    }
+    .dx-item-content.dx-list-item-content{
+        padding-left: 0!important
+    }
     .schedule-title {
         padding: 1rem;
     }
@@ -86,3 +139,13 @@
         margin-right: 0.5rem;
     }
 }
+@media (max-width: 350px) {
+    .dx-overlay-content.dx-resizable {
+        width: 100%!important;
+        top: -40%!important;
+    }
+    .dx-tooltip-appointment-item-content > div{
+        font-size: 1.3rem!important;
+    }
+}
+

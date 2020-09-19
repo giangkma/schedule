@@ -57,7 +57,7 @@ class Login extends Component {
             typeof studentAccount === 'undefined' ||
             studentAccount.trim().length < studentAccount.length ||
             studentAccount.split(' ').length > 1 ||
-            studentAccount === null ||
+            studentAccount == null ||
             !studentAccount.match(/^[0-9a-zA-Z]{0,}$/)
         ) {
             Swal.fire(
@@ -104,7 +104,7 @@ class Login extends Component {
             title: `${
                 status
                     ? 'Đăng nhập thành công !'
-                    : 'Đã xảy ra lỗi ! Hãy kiểm tra lại !'
+                    : 'Tài khoản hoặc mật khẩu không chính xác ! Hãy kiểm tra lại !'
             }`,
         });
     };
